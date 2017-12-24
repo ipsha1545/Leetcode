@@ -1,0 +1,50 @@
+class Solution {
+    public int divide(int ldividend, int ldivisor) {
+        int sign  = 1;
+        
+        //Taking care of boundary conditions
+        if((ldividend < 0 && ldivisor > 0) || (ldividend > 0 && ldivisor < 0)) {
+            sign  =  -1;
+        }
+        
+        long dividend =  Math.abs((long)ldividend);
+        long divisor = Math.abs((long)ldivisor);    
+        
+        if(divisor == 0) return Integer.MAX_VALUE;
+        
+        if(dividend == 0 || dividend < divisor) return 0;
+        
+        long ans = division(dividend, divisor);
+        
+        int signedans;
+        
+        //Handling overflow and then handling sign
+        
+        if(ans >Integer.MAX_VALUE){
+            ans = (sign == 1) ? ans = Integer.MAX_VALUE : Integer.MIN_VALUE;
+        }
+        
+        else{
+            signedans = (int)(sign * ans);
+        }
+        
+       return signedans; 
+        
+    }
+    
+    public long division(long dividend, long diviisor){
+        if(dividend < diviisor) return 0;
+        
+        long sum = diviisor;
+        long multiple = 1;
+    
+    while(sum+sum<=dividend){
+        sum += sum;
+        multiple += multiple;
+    }
+    
+    return multiple + division(dividend - sum,diviisor);
+        
+   }
+    
+} 
